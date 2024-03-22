@@ -4,9 +4,14 @@ import 'package:net_ninja_course/data/questions.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class QuestionsScreen extends StatefulWidget {
-  const QuestionsScreen({required this.onSelectAnswer, super.key});
+  const QuestionsScreen(
+      {required this.onSelectAnswer,
+      required this.handleExitTest,
+      super.key});
 
   final void Function(String selectedAnswer) onSelectAnswer;
+
+  final void Function() handleExitTest;
 
   @override
   State<QuestionsScreen> createState() {
@@ -21,6 +26,12 @@ class _QuestionScreenState extends State<QuestionsScreen> {
     setState(() {
       widget.onSelectAnswer(selectedAnswer);
       currentQuestionIndex++;
+    });
+  }
+
+  void exist(){
+    setState(() {
+      widget.handleExitTest();
     });
   }
 
@@ -53,6 +64,13 @@ class _QuestionScreenState extends State<QuestionsScreen> {
                     onTap(answer);
                   });
             }),
+            const SizedBox(
+              height: 30,
+            ),
+            ElevatedButton(
+              onPressed: exist,
+              child: const Text("Leave Test"),
+            )
           ],
         ),
       ),

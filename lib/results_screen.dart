@@ -5,11 +5,12 @@ import 'package:net_ninja_course/question_summary.dart';
 
 class ResultsScreen extends StatelessWidget {
   final List<String> chosenAnswers;
+  final void Function() handleRestartTest;
 
-  const ResultsScreen({
-    super.key,
-    required this.chosenAnswers,
-  });
+  const ResultsScreen(
+      {super.key,
+      required this.chosenAnswers,
+      required this.handleRestartTest});
 
   List<Map<String, Object>> get summaryData {
     final List<Map<String, Object>> summary = [];
@@ -26,7 +27,7 @@ class ResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final summary =summaryData;
+    final summary = summaryData;
     final int numTotalQuestions = questions.length;
     final int numOfCorrectAnswers = summary.where((data) {
       return data["user_answer"] as String == data["correct_answer"] as String;
@@ -52,13 +53,14 @@ class ResultsScreen extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            TextButton(
-              onPressed: () {},
-              child: Text(
+            OutlinedButton.icon(
+              onPressed: handleRestartTest,
+              icon: const Icon(Icons.restart_alt_rounded),
+              label: Text(
                 "Restart quiz",
                 style: GoogleFonts.lato(
                     textStyle:
-                        const TextStyle(color: Colors.white, fontSize: 24)),
+                        const TextStyle(color: Colors.white, fontSize: 1)),
               ),
             ),
           ],

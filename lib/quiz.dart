@@ -31,6 +31,20 @@ class _QuizState extends State<Quiz> {
     }
   }
 
+  void handleRestartTest() {
+    setState(() {
+      activeScreen = "questions-screen";
+      selectedAnswers = [];
+    });
+  }
+
+  void handleExitTest() {
+    setState(() {
+      activeScreen = "start-screen";
+      selectedAnswers = [];
+    });
+  }
+
   @override
   Widget build(context) {
     return newMethod();
@@ -42,13 +56,15 @@ class _QuizState extends State<Quiz> {
         : activeScreen == "results-screen"
             ? ResultsScreen(
                 chosenAnswers: selectedAnswers,
-              )
+                handleRestartTest: handleRestartTest)
             : QuestionsScreen(
-                onSelectAnswer: onSelectAnswer,
-              );
+                onSelectAnswer: onSelectAnswer, handleExitTest: handleExitTest);
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: const Text("AYOSCRIPT QUIZ APP"),
+        ),
         body: Container(
           decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
